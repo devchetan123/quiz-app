@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id           Int      @id @default(autoincrement())
+  uuid         String?  @unique @db.VarChar(255)
+  firstName    String?  @db.VarChar(50)
+  middleName   String?  @db.VarChar(50)
+  lastName     String?  @db.VarChar(50)
+  emailId      String   @unique @db.VarChar(255)
+  mobileNumber String   @unique @db.VarChar(255)
+  gender       String?  @db.VarChar(10)
+  password     String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  role         String?  @db.VarChar(50)
+  isActive     Boolean? @default(true)
+}
+
+
+model Quizs {
+  id             Int      @id @default(autoincrement())
+  uuid           String?  @unique @db.VarChar(255)
+  title          String   @db.VarChar(255) 
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  userId         String   @default("") @db.VarChar(255)
+}
+
+
+model Questions {
+  id             Int      @id @default(autoincrement())
+  uuid           String?  @unique @db.VarChar(255)
+  title          String   @db.VarChar(255)
+  type           String   @db.VarChar(50)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  quizId         String   @default("") @db.VarChar(255)
+}
+
+model Answers {
+  id             Int      @id @default(autoincrement())
+  uuid           String?  @unique @db.VarChar(255)
+  title          String   @db.VarChar(255)
+  questionId     String   @default("") @db.VarChar(255)
+  isCorrect      Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
